@@ -14,7 +14,7 @@ async function fetchProducts(): Promise<Product[]> {
 }
 
 export function useProducts() {
-  return useQuery<Product[], Error>(['products'], fetchProducts, {
+  return useQuery(['products'], fetchProducts, {
     staleTime: 1000 * 60, // 1 minute
   })
 }
