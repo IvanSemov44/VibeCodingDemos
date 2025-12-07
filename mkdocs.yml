@@ -1,0 +1,16 @@
+site_name: VibeCodingDemos Docs
+nav:
+  - Home: index.md
+  - Getting Started: getting-started.md
+  - Backend: backend.md
+  - Frontend: frontend.md
+  - API: api.md
+  - Deployment: deployment.md
+theme:
+  name: material
+repo_url: https://github.com/yourorg/yourrepo
+site_description: Documentation for the VibeCodingDemos e-commerce MVP
+extra:
+  social:
+    - type: github
+      link: https://github.com/yourorg/yourrepo

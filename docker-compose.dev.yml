@@ -1,0 +1,39 @@
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: kakebrat3
+      POSTGRES_DB: VibeCodingDemoE
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - '5433:5432' # host:container -> changed to 5433 to avoid port conflict on host
+
+  api:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    depends_on:
+      - postgres
+    environment:
+      - ConnectionStrings__DefaultConnection=Host=postgres;Database=VibeCodingDemoE;Username=postgres;Password=kakebrat3
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - '5000:8080' # map host 5000 to container 8080 (ASP.NET listens on 8080 in container)
+    restart: unless-stopped
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    depends_on:
+      - api
+    ports:
+      - '5173:3000' # map host 5173 -> container 3000 so Vite appears on localhost:5173
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+
+volumes:
+  postgres_data:

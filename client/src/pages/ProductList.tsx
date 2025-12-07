@@ -1,0 +1,23 @@
+import React from 'react'
+import { useProducts } from '../api/useProducts'
+
+export default function ProductList() {
+  const { data: products, isLoading, isError, error } = useProducts()
+
+  if (isLoading) return <div>Loading products…</div>
+  if (isError) return <div>Error: {error?.message}</div>
+
+  return (
+    <div>
+      <h1>Products</h1>
+      <ul>
+        {products?.map((p) => (
+          <li key={p.id} style={{ marginBottom: 8 }}>
+            <strong>{p.name}</strong> — ${p.price}
+            <div>{p.description}</div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}

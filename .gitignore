@@ -1,0 +1,28 @@
+# Visual Studio / .NET
+bin/
+obj/
+**/bin/
+**/obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Node
+node_modules/
+dist/
+build/
+/.parcel-cache
+
+# Local env
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs/
+*.log
+
+# Docker
+**/docker-compose.override.yml
+docker-compose.*.local.yml
