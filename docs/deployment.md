@@ -12,4 +12,4 @@ Render notes
 
 CI and docs
 
-You can publish documentation automatically using a CI workflow (GitHub Actions) that runs `mkdocs build` and deploys the static site to GitHub Pages or another host. Example workflow snippet is in the docs folder if you want to enable it.
+Documentation publishing is currently disabled in this repository. The previous automated workflow that built and published the MkDocs site has been removed. See `../docs/DOCS_REMOVAL.md` for details and instructions to re-enable docs publishing.

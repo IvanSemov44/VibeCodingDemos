@@ -23,7 +23,7 @@ gh repo create yourusername/VibeCodingDemos --public --source=. --remote=origin 
 
 # On the GitHub repo page enable GitHub Pages (or the workflow will publish to gh-pages branch automatically).
 
-# After pushing, the GitHub Actions workflow `.github/workflows/docs.yml` will run on push
+# After pushing, documentation publishing is currently disabled. See `docs/DOCS_REMOVAL.md` for details.
 ```
 
 If you prefer to create the repo through the web UI, create a new repository and then run:
