@@ -40,6 +40,17 @@ const slice = createSlice({
         state.items.push({ id, name, price, quantity: 1 })
       }
     },
+    decrease(state, action: PayloadAction<number>) {
+      const id = action.payload
+      const existing = state.items.find((i) => i.id === id)
+      if (existing) {
+        if (existing.quantity > 1) {
+          existing.quantity -= 1
+        } else {
+          state.items = state.items.filter((i) => i.id !== id)
+        }
+      }
+    },
     remove(state, action: PayloadAction<number>) {
       state.items = state.items.filter((i) => i.id !== action.payload)
     },
@@ -52,5 +63,5 @@ const slice = createSlice({
   },
 })
 
-export const { add, remove, set, clear } = slice.actions
+export const { add, decrease, remove, set, clear } = slice.actions
 export default slice.reducer

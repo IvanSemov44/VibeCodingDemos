@@ -41,18 +41,30 @@ namespace Api.Infrastructure.Initialiser
                 }
             }
 
-            // Seed products if none exist
-            if (!await context.Products.AnyAsync())
-            {
-                var products = new[] {
-                    new Product { Name = "T-Shirt", Description = "Comfortable cotton tee", Price = 19.99m },
-                    new Product { Name = "Mug", Description = "Ceramic mug", Price = 9.99m },
-                    new Product { Name = "Sticker Pack", Description = "Set of 5 stickers", Price = 4.99m }
-                };
+            // Seed or update products (upsert by name)
+            var products = new[] {
+                new Product { Name = "T-Shirt", Description = "Comfortable cotton tee", Price = 19.99m, ImageUrl = "https://images.pexels.com/photos/1002649/pexels-photo-1002649.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=480&w=640" },
+                new Product { Name = "Mug", Description = "Ceramic mug", Price = 9.99m, ImageUrl = "https://images.pexels.com/photos/208984/pexels-photo-208984.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=480&w=640" },
+                new Product { Name = "Sticker Pack", Description = "Set of 5 stickers", Price = 4.99m, ImageUrl = "https://images.pexels.com/photos/1633239/stickers-sticker-paper-label-163329.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=480&w=640" }
+            };
 
-                context.Products.AddRange(products);
-                await context.SaveChangesAsync();
+            foreach (var p in products)
+            {
+                var existing = await context.Products.FirstOrDefaultAsync(x => x.Name == p.Name);
+                if (existing == null)
+                {
+                    context.Products.Add(p);
+                }
+                else
+                {
+                    // Update fields if changed or missing
+                    existing.Description = p.Description;
+                    existing.Price = p.Price;
+                    existing.ImageUrl = p.ImageUrl;
+                }
             }
+
+            await context.SaveChangesAsync();
         }
     }
 }

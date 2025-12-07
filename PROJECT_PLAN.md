@@ -87,4 +87,71 @@ The admin user is created by `server/src/Infrastructure/Initialiser/SeedData.cs`
 
 ---
 
+---
+
+## Expanded 5‑Day Plan (detailed)
+
+**Day 1 — Scaffold & Dev Environment**
+- **Goal:** Reproducible local dev environment with Docker, seeded DB, and working client + API.
+- **Tasks:**
+	- Add/verify `docker-compose.dev.yml` contains Postgres, API, and client services.
+	- Ensure `server/Api/Program.cs` runs seeder (`server/src/Infrastructure/Initialiser/SeedData.cs`) at startup.
+	- Verify `client/README_DEV.md` has start instructions.
+	- Start stack and confirm `GET /api/products` returns seeded data.
+- **Acceptance:** `curl http://localhost:5000/api/products` returns seed items; client served at vite dev server or container.
+- **Time:** 2–4 hours.
+
+**Day 2 — Domain & Backend API**
+- **Goal:** Solid domain model, EF Core DB setup, migrations, and product endpoints with OpenAPI.
+- **Tasks:**
+	- Verify `Api.Domain.Entities` models (e.g., `Product`) include required fields.
+	- Add/verify EF Core migrations and ability to apply them (or ensure seeder creates DB).
+	- Implement API endpoints: `GET /api/products`, `GET /api/products/{id}`, plus add `POST/PUT/DELETE` for admin CRUD if required.
+	- Add Swagger/OpenAPI (`AddSwaggerGen`) and ensure docs accessible at `/swagger`.
+	- Add basic request/response DTOs if you want to avoid returning EF entities directly.
+- **Acceptance:** Endpoints return correct payloads; Swagger displays schema for `Product`. Migrations can be created/applied.
+- **Time:** 1–2 days.
+
+**Day 3 — Frontend Core (Product pages, hooks, Cart)**
+- **Goal:** Product listing & detail pages, TanStack Query hooks, cart UX ready for checkout integration.
+- **Tasks:**
+	- Add TanStack Query hooks: `client/src/api/useProducts.ts` and `client/src/api/useProduct.ts`.
+	- Implement `ProductList` and `ProductDetail` pages with routes.
+	- Implement `CartContext` (or adapt existing Redux `cartSlice`) with `add`, `remove`, `clear`, and persistence in `localStorage`.
+	- Add `Cart` page/component showing items, totals, and ability to change quantities.
+	- Add header cart-count indicator and nav.
+	- Ensure accessibility and basic styling.
+- **Acceptance:** User can browse products, view details, add/remove items to/from cart, and cart survives page reload.
+- **Time:** 1 day.
+
+**Day 4 — Checkout & Admin**
+- **Goal:** Mock checkout flow and admin CRUD/dashboard.
+- **Tasks:**
+	- Add checkout flow (review order, mock payment step that returns success/failure).
+	- Add server endpoints for orders (store order records in DB if desired).
+	- Implement admin auth (seeded `admin@example.com`) and admin CRUD UI for `Product` (create/edit/delete).
+	- Add role-based protection on API admin endpoints (`[Authorize(Roles="Admin")]`).
+- **Acceptance:** Admin user can log in and perform product CRUD; checkout flow completes end-to-end (mock).
+- **Time:** 1–2 days.
+
+**Day 5 — QA & Deploy**
+- **Goal:** Tests, CI, container images, and deploy to target (Render).
+- **Tasks:**
+	- Add basic tests:
+		- Backend: integration tests for `GET /api/products` and admin endpoints (local DB or in-memory).
+		- Frontend: smoke tests for components/hooks (Jest + React Testing Library).
+	- Add CI pipeline (GitHub Actions) to run tests and build/publish images.
+	- Prepare production Dockerfiles and Render deploy settings, environment variables, and secrets guidance.
+	- Create `README` runbook with deployment and rollback steps.
+- **Acceptance:** CI passes, deployable images available, and README contains clear deploy/run steps.
+- **Time:** 1 day.
+
+**Cross‑cutting concerns & extras**
+- Logging & error handling: structured logs on the API (`ILogger`).
+- Secrets: environment variables for DB connection and JWT — never commit secrets.
+- Type generation: optional OpenAPI -> TypeScript generation for precise client types into `client/src/types/`.
+- Performance: set caching/HTTP headers as needed later.
+
+---
+
 Authored: 2025-12-07
