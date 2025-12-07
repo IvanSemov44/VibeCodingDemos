@@ -1,10 +1,10 @@
 using Api.Infrastructure.Initialiser;
 using Api.Infrastructure.Persistence;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+using Api.Infrastructure.Services;
+using Api.Infrastructure.Repositories;
+using Api.Application.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +22,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Register repository and service layer (use fully-qualified types to avoid ambiguous references)
+builder.Services.AddScoped<Api.Application.Interfaces.IProductRepository, Api.Infrastructure.Repositories.ProductRepository>();
+builder.Services.AddScoped<Api.Application.Interfaces.IProductService, Api.Infrastructure.Services.ProductService>();
 var app = builder.Build();
 
 // Ensure database is available and seed

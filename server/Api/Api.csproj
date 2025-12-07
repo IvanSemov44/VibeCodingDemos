@@ -18,11 +18,11 @@
     </PackageReference>
   </ItemGroup>
 
-  <!-- Include shared domain/infrastructure source files located next to the Api project -->
+  <!-- Reference clean-architecture projects -->
   <ItemGroup>
-    <Compile Include="..\Domain\**\*.cs" />
-    <Compile Include="..\Infrastructure\**\*.cs" />
-    <Compile Include="..\src\Infrastructure\**\*.cs" />
+    <ProjectReference Include="..\Api.Application\Api.Application.csproj" />
+    <ProjectReference Include="..\Api.Infrastructure\Api.Infrastructure.csproj" />
+    <ProjectReference Include="..\Api.Domain\Api.Domain.csproj" />
   </ItemGroup>
 
 </Project>

@@ -68,4 +68,3 @@ namespace Api.Infrastructure.Initialiser
         }
     }
 }
-
